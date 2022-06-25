@@ -1,0 +1,92 @@
+{
+  "containerDefinitions": [
+    {
+      "name"      : "humanish-backend",
+      "image"     : "923082272114.dkr.ecr.us-east-1.amazonaws.com/humanish:backend",
+      "cpu"       : "256",
+      "memory"    : "512",
+      "essential" : true,
+      "command"   : ["app.py"],
+      "portMappings" : [
+        {
+          "containerPort" : "8080",
+          "hostPort"      : "8080"
+        }
+      ],
+      "secrets" : [
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/POSTGRESQL_USER_NAME",
+          "name"      : "POSTGRESQL_USER_NAME"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/POSTGRESQL_DB",
+          "name"      : "POSTGRESQL_DB"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/LISTEN_ON",
+          "name"      : "LISTEN_ON"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/POSTGRESQL_HOST",
+          "name"      : "POSTGRESQL_HOST"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/POSTGRESQL_PASSWORD",
+          "name"      : "POSTGRESQL_PASSWORD"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/OPENAI_API_KEY",
+          "name"      : "OPENAI_API_KEY"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/REPLICATE_API_TOKEN",
+          "name"      : "REPLICATE_API_TOKEN"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/REACT_APP_URL_BACKEND",
+          "name"      : "REACT_APP_URL_BACKEND"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/REACT_APP_URL_FRONTEND",
+          "name"      : "REACT_APP_URL_FRONTEND"
+        },
+        {
+          "valueFrom" : "arn:aws:ssm:us-east-1:923082272114:parameter/humanish/production/SECRET_KEY",
+          "name"      : "SECRET_KEY"
+        }
+      ],
+      "mountPoints" : [],
+      "logConfiguration" : {
+        "logDriver" : "awslogs",
+        "options" : {
+          "awslogs-group"         : "/ecs/humanish-backend",
+          "awslogs-region"        : "us-east-1",
+          "awslogs-stream-prefix" : "ecs",
+          "awslogs-create-group"  : "true"
+        }
+      },
+      "volumesFrom" : [],
+      "environment" : []
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "linuxParameters": null,
+  "cpu": "1024",
+  "resourceRequirements": null,
+  "ulimits": null,
+  "secrets": null,
+  "memory": "4096",
+  "memoryReservation": null,
+  "executionRoleArn": "arn:aws:iam::923082272114:role/humanish_ecs_task_execution",
+  "taskRoleArn": "arn:aws:iam::923082272114:role/humanish_ecs_task_execution",
+  "networkMode": "awsvpc",
+  "interactive": null,
+  "pseudoTerminal": null,
+  "user": null,
+  "readonlyRootFilesystem": null,
+  "dockerLabels": null,
+  "systemControls": null,
+  "family": "humanish-backend"
+}

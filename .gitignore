@@ -1,0 +1,17 @@
+frontend/node_modules
+
+# IDEs
+.idea/
+humanish_backend_venv/
+frontend/.idea
+topics.csv
+.env
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+
+# database
+.DS_Store
+
+__pycache__/

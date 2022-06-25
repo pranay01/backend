@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    image: python:3.9
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: app.py
+    depends_on:
+      - database # dont start until the database is up
+    ports:
+      - 8080:8080
+    environment:
+    - POSTGRESQL_PASSWORD=magical_password
+    - POSTGRESQL_HOST=db
+    - POSTGRESQL_USER_NAME=postgres
+    - POSTGRESQL_DB=humanish
+    - LOCAL_ENVIRONMENT=True
+    - FLASK_ENV=development
+    - SECRET_KEY
+    - REPLICATE_API_TOKEN
+    - PYTHONUNBUFFERED=1
+    volumes:
+    - .:/app
+  database:
+    image: "postgres" # use latest official postgres version
+    container_name: db
+    env_file:
+      - database.env # configure postgres
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
+
+secrets:                        # top level secrets block
+  OPENAI_API_KEY:
+    external: true
